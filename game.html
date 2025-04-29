@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>لعبة تيكو - مكونات الكمبيوتر</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap');
+  
+    body {
+      margin: 0;
+      padding: 20px;
+      font-family: 'Cairo', sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a6c1ee);
+      background-size: 400% 400%;
+      animation: gradientBG 20s ease infinite;
+      color: #333;
+    }
+  
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  
+    h1 {
+      color: #5f0f40;
+      font-size: 3em;
+      margin-bottom: 10px;
+      text-shadow: 2px 2px #fce4ec;
+    }
+  
+    .game-area {
+      margin-top: 40px;
+      animation: fadeInUp 1s ease forwards;
+    }
+  
+    .device, .option {
+      display: inline-block;
+      margin: 15px;
+      padding: 15px;
+      background: #ffffffee;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+  
+    .device:hover, .option:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+  
+    .device img, .option img {
+      width: 120px;
+      height: 120px;
+      border-radius: 10px;
+    }
+  
+    .target {
+      margin: 40px auto;
+      padding: 25px;
+      border: 3px dashed #5f0f40;
+      border-radius: 20px;
+      min-height: 160px;
+      width: 60%;
+      background-color: #ffffffcc;
+      backdrop-filter: blur(5px);
+      transition: border-color 0.3s;
+    }
+  
+    .target:hover {
+      border-color: #9d4edd;
+    }
+  
+    button {
+      margin-top: 30px;
+      background: linear-gradient(to right, #00b4d8, #48cae4);
+      border: none;
+      padding: 15px 40px;
+      font-size: 1.3em;
+      font-weight: bold;
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transition: background 0.4s, transform 0.2s;
+    }
+  
+    button:hover {
+      background: linear-gradient(to right, #0077b6, #00b4d8);
+      transform: scale(1.05);
+    }
+    #endMessage {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 30px 50px;
+  border-radius: 20px;
+  font-size: 1.8em;
+  color: #6a0572;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+  z-index: 1000;
+  animation: fadeIn 1s ease forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -60%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+  
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+  
+</head>
+<body>
+
+  <h1>🎮 تيكو - اختبر معرفتك بمكونات الكمبيوتر</h1>
+
+  <div id="game" class="game-area"></div>
+  <div id="endMessage" style="display: none;">
+    🎉 لقد أكملت اللعبة! سيتم نقلك للمرحلة التالية...
+  </div>
+  
+  <button id="next" style="display:none;" onclick="nextGame()">🎯 التالي</button>
+
+  <script>
+    let currentStage = 0;
+    
+    const stages = [
+      {
+        type: 'dragDrop',
+        question: "🖥️ اسحب الكمبيوتر إلى الهدف الصحيح!",
+        devices: [
+          { id: "computer", name: "كمبيوتر", img: "computer.png" },
+          { id: "tablet", name: "تابلت", img: "tablet.png" },
+          { id: "mobile", name: "هاتف ذكي", img: "mobile.png" }
+        ],
+        correct: "computer"
+      },
+      {
+        type: 'chooseImage',
+        question: "🔍 اختر مكون وحدة المعالجة المركزية (CPU):",
+        options: [
+          { id: "cpu", name: "وحدة المعالجة المركزية", img: "cpu.jfif" },
+          { id: "ram", name: "ذاكرة الوصول العشوائي", img: "ram.jfif" },
+          { id: "keyboard", name: "لوحة المفاتيح", img: "aseda.jfif" }
+        ],
+        correct: "cpu"
+      },
+      {
+        type: 'dragDrop',
+        question: "🎧 اسحب سماعة الرأس إلى الهدف الصحيح!",
+        devices: [
+          { id: "headphone", name: "سماعة رأس", img: "JBL Tune 570bt Black Auriculares Onear Inalámbricos.jfif" },
+          { id: "mouse", name: "فأرة", img: "dhdsjj.jfif" },
+          { id: "keyboard", name: "لوحة مفاتيح", img: "aseda.jfif" }
+        ],
+        correct: "headphone"
+      },
+      {
+        type: 'chooseImage',
+        question: "🔍اختر مكون وحدة النظام (cas):",
+        options: [
+          { id: "cpu", name: "وحدة المعالجة المركزية", img: "cas.jfif" },
+          { id: "ram", name: "ذاكرة الوصول العشوائي", img: "ram.jfif" },
+          { id: "keyboard", name: "لوحة المفاتيح", img: "aseda.jfif" }
+        ],
+        correct: "cpu"
+      },
+      {
+        type: 'dragDrop',
+        question: "اختر مكون شاشة الكمبيوتر !",
+        devices: [
+          { id: "headphone", name: "سماعة رأس", img: "High definition 20 inch.jfif" },
+          { id: "mouse", name: "فأرة", img: "dhdsjj.jfif" },
+          { id: "keyboard", name: "لوحة مفاتيح", img: "aseda.jfif" }
+        ],
+        correct: "headphone"
+      },
+      {
+        type: 'chooseImage',
+        question: "🔍 اختر مكون التخزين:",
+        options: [
+          { id: "mouse", name: "فأرة", img: "dhdsjj.jfif" },
+          { id: "ssd", name: "قرص صلب SSD", img: "ssd.jfif" },
+          { id: "keyboard", name: "لوحة مفاتيح", img: "aseda.jfif" }
+        ],
+        correct: "ssd"
+      }
+    ];
+
+    function loadStage() {
+      const gameArea = document.getElementById('game');
+      gameArea.innerHTML = '';
+      document.getElementById('next').style.display = 'none';
+
+      const stage = stages[currentStage];
+      const title = document.createElement('h2');
+      title.innerText = stage.question;
+      gameArea.appendChild(title);
+
+      if (stage.type === 'dragDrop') {
+        const target = document.createElement('div');
+        target.className = 'target';
+        target.ondragover = allowDrop;
+        target.ondrop = drop;
+        target.dataset.correct = stage.correct;
+        target.innerText = "🎯 اسحب الجهاز الصحيح هنا";
+        gameArea.appendChild(target);
+
+        stage.devices.forEach(device => {
+          const div = document.createElement('div');
+          div.className = 'device';
+          div.draggable = true;
+          div.id = device.id;
+          div.ondragstart = drag;
+          div.innerHTML = `<img src="${device.img}" alt="${device.name}"><div>${device.name}</div>`;
+          gameArea.appendChild(div);
+        });
+      } else if (stage.type === 'chooseImage') {
+        stage.options.forEach(option => {
+          const div = document.createElement('div');
+          div.className = 'option';
+          div.innerHTML = `<img src="${option.img}" alt="${option.name}"><div>${option.name}</div>`;
+          div.onclick = () => checkChoice(option.id);
+          gameArea.appendChild(div);
+        });
+      }
+    }
+
+    function drag(ev) {
+      // التأكد من أن العنصر المسحوب هو العنصر الرئيسي (وليس الصورة أو النص بداخله)
+      let device = ev.target;
+      while (!device.classList.contains('device') && device.parentElement) {
+        device = device.parentElement;
+      }
+      ev.dataTransfer.setData("text/plain", device.id);
+    }
+
+    function allowDrop(ev) {
+      ev.preventDefault();
+    }
+
+    function drop(ev) {
+      ev.preventDefault();
+      const data = ev.dataTransfer.getData("text/plain");
+      const draggedElement = document.getElementById(data);
+      const dropZone = ev.currentTarget;
+      const correctId = dropZone.dataset.correct;
+
+      if (data === correctId) {
+        dropZone.innerHTML = '';
+        dropZone.appendChild(draggedElement);
+        alert('✅ إجابة صحيحة!');
+        setTimeout(() => nextGame(), 500);
+      } else {
+        alert('❌ إجابة خاطئة! حاول مرة أخرى.');
+      }
+    }
+
+    function checkChoice(choice) {
+      const stage = stages[currentStage];
+      if (choice === stage.correct) {
+        alert('✅ إجابة صحيحة!');
+        document.getElementById('next').style.display = 'inline-block';
+      } else {
+        alert('❌ إجابة خاطئة!');
+      }
+    }
+    
+
+    function nextGame() {
+  currentStage++;
+  if (currentStage < stages.length) {
+    loadStage();
+  } else {
+    // عرض رسالة النهاية
+    const endMsg = document.getElementById('endMessage');
+    endMsg.style.display = 'block';
+
+    // الانتقال بعد ثانيتين
+    setTimeout(function () {
+      window.location.href = 'quiz.html'; // ← عدّل حسب الصفحة المطلوبة
+    }, 2000);
+  }
+}
+
+
+    loadStage();
+  </script>
+</body>
+</html>

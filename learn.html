@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>تعلم الأجهزة | تيكو</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://code.responsivevoice.org/responsivevoice.js?key=YOUR_KEY_HERE"></script>
+
+    <style>
+        :root {
+            --main-color: #2196f3;
+            --dark-color: #0d47a1;
+            --light-bg: #e3f2fd;
+            --secondary-bg: #bbdefb;
+            --card-bg: #ffffff;
+        }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(to bottom, var(--light-bg), var(--secondary-bg));
+            text-align: center;
+            padding: 0;
+            margin: 0;
+        }
+        nav {
+            background-color: var(--dark-color);
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            padding: 10px 0;
+            border-radius: 0 0 20px 20px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2em;
+            padding: 8px 15px;
+            border-radius: 10px;
+            transition: background 0.3s;
+        }
+        nav a:hover {
+            background-color: var(--main-color);
+        }
+        header {
+            background-color: var(--main-color);
+            color: white;
+            padding: 30px;
+            font-size: 2.8em;
+            font-weight: bold;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        h1 {
+            margin-top: 30px;
+            font-size: 2em;
+            color: var(--dark-color);
+        }
+        #devices {
+            padding: 20px;
+        }
+        .device {
+            display: inline-block;
+            margin: 20px;
+            padding: 20px;
+            width: 250px;
+            border-radius: 20px;
+            background: var(--card-bg);
+            border: 2px solid #90caf9;
+            transition: all 0.4s ease;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            cursor: pointer;
+        }
+        .device:hover {
+            transform: translateY(-10px) scale(1.05);
+            background: #e1f5fe;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+        }
+        .device img {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 15px;
+        }
+        .device h2 {
+            color: var(--main-color);
+            margin: 10px 0;
+        }
+        .device p {
+            color: #555;
+            font-size: 1.1em;
+        }
+        footer {
+            margin-top: 60px;
+            padding: 30px 20px;
+            background: var(--dark-color);
+            color: white;
+            border-radius: 20px 20px 0 0;
+            font-size: 1em;
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+            line-height: 1.6;
+        }
+        footer p {
+            margin: 10px 0;
+        }
+        .accessibility {
+            margin: 30px 0;
+        }
+        .accessibility button {
+            margin: 5px;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background 0.3s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        }
+        .increase { background-color: #4caf50; color: white; }
+        .decrease { background-color: #f44336; color: white; }
+        .read { background-color: #ff9800; color: white; }
+        .accessibility button:hover {
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    🌟 تيكو | تعلم الأجهزة 🌟
+</header>
+
+<nav>
+    <a href="index.html">الرئيسية</a>
+    <a href="goals.html">🎯 أهداف ومهارات</a>
+    <a href="learn.html">📚 تعلم الأجهزة</a>
+    <a href="game.html"> 🎮 العب مع الأجهزة</a>
+    <a href="quiz.html"> ✍️ اختبار معلوماتك</a>
+</nav>
+
+<h1>تعرف على هذه الأجهزة التكنولوجية</h1>
+
+<section id="devices">
+    <div class="device">
+        <img src="https://cdn-icons-png.flaticon.com/512/1055/1055687.png" alt="كمبيوتر">
+        <h2>الكمبيوتر</h2>
+        <p>يُستخدم للدراسة والعمل واللعب.</p>
+    </div>
+
+    <div class="device">
+        <img src="tablet.png" alt="تابلت">
+        <h2>التابلت</h2>
+        <p>جهاز خفيف لتصفح الإنترنت ومشاهدة الفيديوهات.</p>
+    </div>
+
+    <div class="device">
+        <img src="https://cdn-icons-png.flaticon.com/512/15/15874.png" alt="موبايل">
+        <h2>الموبايل</h2>
+        <p>يمكننا الاتصال والتواصل عبره مع الأصدقاء والعائلة.</p>
+    </div>
+
+    <div class="device">
+        <img src="dvs.jfif" alt="ساعة ذكية">
+        <h2>الساعة الذكية</h2>
+        <p>تساعد في تتبع اللياقة الصحية وتلقي الإشعارات.</p>
+    </div>
+
+    <div class="device">
+        <img src="JBL Tune 570bt Black Auriculares Onear Inalámbricos.jfif" alt="سماعات">
+        <h2>السماعات</h2>
+        <p>تستخدم للاستماع إلى الموسيقى والمكالمات.</p>
+    </div>
+
+    <div class="device">
+        <img src="Canon EOS 600D Appareil photo numérique Reflex 18 Mpix Kit Objectif 18-135mm IS Noir.jfif" alt="كاميرا">
+        <h2>الكاميرا الذكية</h2>
+        <p>تُستخدم لالتقاط الصور عالية الجودة وتسجيل الفيديوهات بدقة عالية.</p>
+    </div>
+    
+    
+    <div class="device">
+        <img src="sggs.jfif" alt="مروحة تبريد">
+        <h2>مروحة التبريد</h2>
+        <p>تبرد الكمبيوتر وتحافظ عليه من السخونة الزائدة.</p>
+    </div>
+    
+    <div class="device">
+        <img src="High definition 20 inch.jfif" alt="شاشة كمبيوتر">
+        <h2>شاشة الكمبيوتر</h2>
+        <p>تُظهر الصور والبرامج التي نعمل عليها.</p>
+    </div>
+    
+    <div class="device">
+        <img src="aseda.jfif" alt="لوحة مفاتيح">
+        <h2>لوحة المفاتيح</h2>
+        <p>نستخدمها لكتابة الحروف والأرقام على الكمبيوتر.</p>
+    </div>
+    
+    <div class="device">
+        <img src="dhdsjj.jfif" alt="فأرة كمبيوتر">
+        <h2>فأرة الكمبيوتر</h2>
+        <p>نحرك بها المؤشر ونفتح الملفات والألعاب بسهولة.</p>
+    </div>
+    
+    
+</section>
+
+<div class="accessibility" id="accessibility">
+    <button class="increase" onclick="adjustFont('up')">🔍 تكبير الخط</button>
+    <button class="decrease" onclick="adjustFont('down')">🔎 تصغير الخط</button>
+    <button class="read" onclick="readPage()">🔈 قراءة المعلومات</button>
+</div>
+
+<footer id="footer">
+    <p>&copy; 2025 رضوى فارس ابراهيم محمد . كل الحقوق محفوظة.</p>
+    <p>📧 للتواصل معنا: support@teko.com</p>
+</footer>
+
+<script>
+    function readText(text) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'ar-SA';
+
+        let voices = speechSynthesis.getVoices();
+        if (voices.length === 0) {
+            speechSynthesis.onvoiceschanged = () => {
+                voices = speechSynthesis.getVoices();
+                setArabicVoice(utterance, voices);
+                speechSynthesis.speak(utterance);
+            };
+        } else {
+            setArabicVoice(utterance, voices);
+            speechSynthesis.speak(utterance);
+        }
+    }
+
+    function setArabicVoice(utterance, voices) {
+        const arabicVoice = voices.find(voice => voice.lang.startsWith('ar'));
+        if (arabicVoice) {
+            utterance.voice = arabicVoice;
+        } else {
+            alert('⚠️ لا يوجد صوت عربي مثبت في المتصفح.');
+        }
+    }
+
+    document.querySelectorAll('.device').forEach(device => {
+        device.addEventListener('click', () => {
+            const title = device.querySelector('h2').innerText;
+            const description = device.querySelector('p').innerText;
+            readText(`${title}. ${description}`);
+        });
+    });
+
+    function adjustFont(action) {
+        const body = document.body;
+        const style = window.getComputedStyle(body).fontSize;
+        let currentSize = parseFloat(style);
+        if (action === 'up') {
+            body.style.fontSize = (currentSize + 2) + 'px';
+        } else if (action === 'down' && currentSize > 10) {
+            body.style.fontSize = (currentSize - 2) + 'px';
+        }
+    }
+
+    function readPage() {
+        const content = Array.from(document.querySelectorAll('.device'))
+            .map(device => device.querySelector('h2').innerText + '. ' + device.querySelector('p').innerText)
+            .join(' ');
+        readText(content);
+    }
+</script>
+
+</body>
+</html>

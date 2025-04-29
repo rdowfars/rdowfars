@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <title>اختبار تيكو التكنولوجي</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(-45deg, #fff3e0, #ffe0b2, #ffcc80, #ffb74d);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      text-align: center;
+      padding: 20px;
+      transition: font-size 0.3s ease;
+    }
+
+    @keyframes gradientBG {
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
+    }
+
+    header {
+      background-color: #fb8c00;
+      color: white;
+      padding: 20px;
+      font-size: 2em;
+      border-radius: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    .quiz-container {
+      margin-top: 30px;
+      background: #fff;
+      padding: 30px;
+      border-radius: 25px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .question {
+      font-size: 1.6em;
+      margin-bottom: 20px;
+    }
+
+    .options label {
+      display: block;
+      margin: 12px 0;
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+
+    .submit-btn {
+      margin-top: 20px;
+      padding: 15px 40px;
+      font-size: 1.2em;
+      background-color: #ff9800;
+      color: white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: #f57c00;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    .accessibility {
+      margin: 30px 0 10px;
+    }
+
+    .accessibility button {
+      margin: 5px;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .increase {background-color: #4caf50; color: white;}
+    .decrease {background-color: #f44336; color: white;}
+    .read {background-color: #2196f3; color: white;}
+
+    footer {
+      margin-top: 40px;
+      color: #555;
+      font-size: 1em;
+    }
+
+    img.option-img {
+      width: 100px;
+      height: 100px;
+      border-radius: 15px;
+      border: 3px solid transparent;
+      cursor: pointer;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+    @media (max-width: 600px) {
+  .option-img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .question {
+    font-size: 1.2em;
+  }
+
+  .submit-btn {
+    width: 100%;
+  }
+
+  .quiz-container {
+    padding: 20px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+<header>🌟 تيكو | الاختبار التكنولوجي 🌟</header>
+<h1>اختبر معلوماتك!</h1>
+
+<div class="quiz-container">
+  <div id="image-container" style="margin-bottom: 20px;"></div>
+  <div class="question" id="question"></div>
+  <div class="options" id="options"></div>
+  <button class="submit-btn" onclick="checkAnswer()">إرسال الإجابة</button>
+  <div class="result" id="result"></div>
+</div>
+
+<div class="accessibility">
+  <button class="increase" onclick="adjustFont(1)">🔍 تكبير الخط</button>
+  <button class="decrease" onclick="adjustFont(-1)">🔎 تصغير الخط</button>
+  <button class="read" onclick="readText()">🔈 قراءة السؤال</button>
+</div>
+
+<footer>
+    &copy; 2025 رضوى فارس ابراهيم محمد . كل الحقوق محفوظة.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+  let fontSize = 16;
+  const quizData = [
+    {
+      question: "اختر الجهاز الصحيح لإجراء مكالمات فيديو:",
+      imageOptions: [
+        { src: "طابعة.jfif", value: "طابعة" },
+        { src: "تليفون.jfif", value: "موبايل" },
+        { src: "لوحة مفاتيح.jfif", value: "لوحة مفاتيح" }
+      ],
+      correct: "موبايل"
+    },
+    {
+      question: "تستخدم في الكتابة عليي الحاسوب ؟",
+      imageOptions: [
+        { src: "تليفون.jfif", value: "موبايل" },
+        { src: "طابعة.jfif", value: "طابعة" },
+        { src: "لوحة مفاتيح.jfif", value: "لوحة مفاتيح" }
+      ],
+      correct: "لوحة مفاتيح"
+    },
+    {
+      question: "ما اسم هذا الجهاز؟",
+      image: "cas.jfif",
+      options: ["وحدة النظام", "كاميرا", "ماوس"],
+      correct: "وحدة النظام"
+    },
+    {
+      question: "أختر الجهاز المسؤل عن النقر علي شاشة الحاسوب",
+      imageOptions: [
+        { src: "طابعة.jfif", value: "طابعة" },
+        { src: "dhdsjj.jfif", value: "الفأرة" },
+        { src: "لوحة مفاتيح.jfif", value: "لوحة مفاتيح" }
+      ],
+      correct: "الفأرة"
+    },
+    {
+      question: "أختر صورة الميكروفون  ؟",
+      imageOptions: [
+        { src: "الميكروفون.jfif", value: "الميكروفون" },
+        { src: "طابعة.jfif", value: "طابعة" },
+        { src: "لوحة مفاتيح.jfif", value: "لوحة مفاتيح" }
+      ],
+      correct: "الميكروفون"
+    },
+    {
+      question: "ما اسم هذا الجهاز؟",
+      image: "سماعات.jfif",
+      options: ["ساعة يد", "كاميرا", "سماعات"],
+      correct: "سماعات" 
+    }
+  ];
+
+  let currentQuestion = 0;
+
+  function loadQuestion() {
+    const q = quizData[currentQuestion];
+    document.getElementById("question").textContent = q.question;
+
+    const imageContainer = document.getElementById("image-container");
+    imageContainer.innerHTML = q.image ? `<img src="${q.image}" style="max-width:100%; border-radius:15px;">` : "";
+
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+
+    if (q.imageOptions) {
+      q.imageOptions.forEach(opt => {
+        const label = document.createElement("label");
+        label.style.display = "inline-block";
+        label.style.margin = "10px";
+        label.style.cursor = "pointer";
+        label.innerHTML = `
+          <input type="radio" name="answer" value="${opt.value}" style="display:none">
+          <img src="${opt.src}" class="option-img" onclick="selectImageOption(this)">
+          <div>${opt.value}</div>
+        `;
+        optionsDiv.appendChild(label);
+      });
+    } else if (q.options) {
+      q.options.forEach(option => {
+        const label = document.createElement("label");
+        label.innerHTML = `<input type="radio" name="answer" value="${option}"> ${option}`;
+        optionsDiv.appendChild(label);
+      });
+    }
+
+    document.getElementById("result").textContent = "";
+  }
+
+  function selectImageOption(img) {
+    const imgs = document.querySelectorAll('.options img');
+    imgs.forEach(i => i.style.border = '3px solid transparent');
+    img.style.border = '3px solid #4caf50';
+    img.previousElementSibling.checked = true;
+  }
+
+  function checkAnswer() {
+    const options = document.getElementsByName('answer');
+    let selected;
+    for (const option of options) {
+      if (option.checked) {
+        selected = option.value;
+        break;
+      }
+    }
+
+    const result = document.getElementById('result');
+    if (!selected) {
+      result.textContent = "⚠️ الرجاء اختيار إجابة أولاً.";
+      result.style.color = "orange";
+      return;
+    }
+
+    const correctAnswer = quizData[currentQuestion].correct;
+    if (selected === correctAnswer) {
+      result.textContent = "🎉 إجابة صحيحة!";
+      result.style.color = "green";
+      confetti({ particleCount: 80, spread: 70, origin: { y: 0.6 } });
+    } else {
+      result.textContent = "❌ إجابة خاطئة.";
+      result.style.color = "red";
+    }
+
+    setTimeout(() => {
+      currentQuestion++;
+      if (currentQuestion < quizData.length) {
+        loadQuestion();
+      } else {
+        document.querySelector('.quiz-container').innerHTML = `
+          <div class="result">🎓 انتهى الاختبار!</div>
+          <img src="https://cdn-icons-png.flaticon.com/512/4712/4712104.png" style="width:200px; animation: float 2s infinite ease-in-out; margin-top: 20px;">
+          <div style="font-size:2em; margin-top:15px; color:#2e7d32;">👏 أحسنت!</div>
+        `;
+      }
+    }, 1500);
+  }
+
+  function adjustFont(change) {
+    fontSize += change;
+    document.body.style.fontSize = fontSize + "px";
+  }
+
+  function readText() {
+    const text = document.getElementById('question').innerText;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'ar-SA';
+    const voices = window.speechSynthesis.getVoices();
+    const arabicVoice = voices.find(voice => voice.lang.includes('ar'));
+    if (arabicVoice) {
+      utterance.voice = arabicVoice;
+    } else {
+      alert('⚠️ لا يوجد صوت عربي مثبت في متصفحك.');
+    }
+    window.speechSynthesis.speak(utterance);
+  }
+
+  window.speechSynthesis.onvoiceschanged = () => {
+    window.speechSynthesis.getVoices();
+  };
+
+  window.onload = loadQuestion;
+</script>
+
+</body>
+</html>

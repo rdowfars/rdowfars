@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تيكو | نلعب ونتعلم التكنولوجيا</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --main-color: #4a90e2;
+      --dark-color: #0f3460;
+      --light-bg: #f0f4f8;
+      --secondary-bg: #dbe2ef;
+    }
+    body {
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(to bottom, var(--light-bg), var(--secondary-bg));
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+    }
+    header {
+      background: var(--main-color);
+      color: white;
+      text-align: center;
+      padding: 30px 10px;
+      font-size: 2.2em;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    /* نجوم */
+    .star {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 5s infinite;
+      opacity: 0.8;
+    }
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: translateY(0);}
+      50% { opacity: 1; transform: translateY(10px);}
+    }
+    /* بنر احترافي */
+    .banner {
+      width: 100%;
+      height: 300px;
+      background-image: url('alex-knight-2EJCSULRwC8-unsplash.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 2em;
+      text-shadow: 2px 2px 5px #000;
+    }
+    main {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .btn {
+      background: var(--main-color);
+      color: white;
+      padding: 15px 30px;
+      margin: 15px 10px;
+      border-radius: 12px;
+      font-size: 1.2em;
+      text-decoration: none;
+      display: inline-block;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: 0.3s;
+      animation: pulse 2.5s infinite;
+    }
+    .btn:hover {
+      background: var(--dark-color);
+      transform: scale(1.05);
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+      100% { transform: scale(1); }
+    }
+    .game-container {
+      background: #fff;
+      border: 3px solid var(--main-color);
+      border-radius: 20px;
+      margin: 50px auto;
+      width: 400px;
+      height: 300px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    }
+    .player {
+      width: 50px;
+      height: 50px;
+      background: #ffd93d;
+      border-radius: 50%;
+      position: absolute;
+      bottom: 10px;
+      left: 175px;
+      transition: left 0.2s ease;
+    }
+    .star-fall {
+      width: 20px;
+      height: 20px;
+      background: gold;
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      animation: fall 5s linear infinite;
+    }
+    @keyframes fall {
+      0% { transform: translateY(-30px); }
+      100% { transform: translateY(330px); }
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: var(--dark-color);
+      color: white;
+      font-size: 0.9em;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  🌟 تيكو - نلعب ونتعلم التكنولوجيا 🌟
+</header>
+
+<div class="banner">
+  مستقبل أطفالنا يبدأ هنا!
+</div>
+
+<main>
+  <h1>مرحبًا بك في تيكو!</h1>
+  
+  <a href="goals.html" class="btn sound-btn">🎯 أهداف ومهارات</a>
+  <a href="learn.html" class="btn sound-btn">📚 تعلم الأجهزة</a>
+  <a href="game.html" class="btn sound-btn">🎮 العب مع الأجهزة</a>
+  <a href="quiz.html" class="btn sound-btn">✍️ اختبار معلوماتك</a>
+  <a href="ex.html" class="btn sound-btn">أشراف</a>
+  <div class="game-container" id="game">
+    <div class="player" id="player"></div>
+  </div>
+</main>
+
+<footer>
+  &copy; 2025 رضوى فارس ابراهيم محمد . جميع الحقوق محفوظة.
+</footer>
+
+<script>
+  // صوت نقر
+  const buttons = document.querySelectorAll('.sound-btn');
+  const clickSound = new Audio('https://assets.mixkit.co/sfx/preview/mixkit-quick-win-video-game-notification-269.wav');
+  buttons.forEach(button => {
+    button.addEventListener('click', () => {
+      clickSound.play();
+    });
+  });
+
+  // نجوم متحركة في الهيدر
+  for (let i = 0; i < 25; i++) {
+    const star = document.createElement('div');
+    star.className = 'star';
+    star.style.left = Math.random() * 100 + '%';
+    star.style.top = Math.random() * 100 + '%';
+    star.style.animationDuration = (3 + Math.random() * 3) + 's';
+    document.querySelector('header').appendChild(star);
+  }
+
+  // لعبة التقاط النجوم
+  const game = document.getElementById('game');
+  const player = document.getElementById('player');
+
+  document.addEventListener('keydown', (e) => {
+    let left = parseInt(window.getComputedStyle(player).left);
+    if (e.key === 'ArrowLeft' && left > 0) {
+      player.style.left = (left - 20) + 'px';
+    }
+    if (e.key === 'ArrowRight' && left < 350) {
+      player.style.left = (left + 20) + 'px';
+    }
+  });
+
+  setInterval(() => {
+    const star = document.createElement('div');
+    star.className = 'star-fall';
+    star.style.left = Math.random() * 380 + 'px';
+    game.appendChild(star);
+
+    let move = setInterval(() => {
+      const starTop = parseInt(window.getComputedStyle(star).top);
+      const playerLeft = parseInt(window.getComputedStyle(player).left);
+
+      if (starTop > 250 && Math.abs(parseInt(star.style.left) - playerLeft) < 40) {
+        clickSound.play();
+        star.remove();
+        clearInterval(move);
+      }
+
+      if (starTop > 300) {
+        star.remove();
+        clearInterval(move);
+      }
+    }, 50);
+  }, 1800);
+</script>
+
+</body>
+</html>
